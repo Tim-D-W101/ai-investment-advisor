@@ -4,22 +4,27 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, Sparkles } from "lucide-react";
 
-const particles = Array.from({ length: 20 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  delay: Math.random() * 0.5,
-  duration: 1 + Math.random() * 1.5,
-  size: 6 + Math.random() * 8,
-  color: [
-    "bg-navy",
-    "bg-navy-light",
-    "bg-amber-400",
-    "bg-green-400",
-    "bg-blue-400",
-    "bg-purple-400",
-    "bg-pink-400",
-  ][Math.floor(Math.random() * 7)],
-}));
+const particles = Array.from({ length: 20 }, (_, i) => {
+  const x = Math.random() * 100;
+  return {
+    id: i,
+    x,
+    animateY: -200 - Math.random() * 200,
+    animateX: `${x + (Math.random() - 0.5) * 40}vw`,
+    delay: Math.random() * 0.5,
+    duration: 1 + Math.random() * 1.5,
+    size: 6 + Math.random() * 8,
+    color: [
+      "bg-navy",
+      "bg-navy-light",
+      "bg-amber-400",
+      "bg-green-400",
+      "bg-blue-400",
+      "bg-purple-400",
+      "bg-pink-400",
+    ][Math.floor(Math.random() * 7)],
+  };
+});
 
 export default function Celebration() {
   const [visible, setVisible] = useState(true);
@@ -54,8 +59,8 @@ export default function Celebration() {
                 initial={{ opacity: 0, y: 0, x: `${p.x}vw`, scale: 0 }}
                 animate={{
                   opacity: [0, 1, 1, 0],
-                  y: [0, -200 - Math.random() * 200],
-                  x: `${p.x + (Math.random() - 0.5) * 40}vw`,
+                  y: [0, p.animateY],
+                  x: p.animateX,
                   scale: [0, 1, 1, 0],
                 }}
                 transition={{

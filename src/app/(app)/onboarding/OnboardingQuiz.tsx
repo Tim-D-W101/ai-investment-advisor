@@ -141,26 +141,10 @@ export default function OnboardingQuiz() {
       setAnswers((prev) => ({ ...prev, [currentQuestion.id]: answer.value }));
       setScores((prev) => ({ ...prev, [currentQuestion.id]: answer.score }));
     },
-    [currentQuestion?.id]
+    [currentQuestion.id]
   );
 
-  const goNext = useCallback(() => {
-    if (!selectedAnswer) return;
-    if (isLastStep) {
-      handleSubmit();
-      return;
-    }
-    setDirection(1);
-    setStep((s) => s + 1);
-  }, [selectedAnswer, isLastStep]);
-
-  const goBack = useCallback(() => {
-    if (step === 0) return;
-    setDirection(-1);
-    setStep((s) => s - 1);
-  }, [step]);
-
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     setSubmitting(true);
     setError(null);
 
@@ -185,7 +169,23 @@ export default function OnboardingQuiz() {
       );
       setSubmitting(false);
     }
-  };
+  }, [answers, scores]);
+
+  const goNext = useCallback(() => {
+    if (!selectedAnswer) return;
+    if (isLastStep) {
+      void handleSubmit();
+      return;
+    }
+    setDirection(1);
+    setStep((s) => s + 1);
+  }, [selectedAnswer, isLastStep, handleSubmit]);
+
+  const goBack = useCallback(() => {
+    if (step === 0) return;
+    setDirection(-1);
+    setStep((s) => s - 1);
+  }, [step]);
 
   // ── Render ────────────────────────────────────────────────────────────────
 

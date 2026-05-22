@@ -4,11 +4,20 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/browser";
 import { LogOut, Menu, X, BarChart3 } from "lucide-react";
+import { usePathname } from "next/navigation";
+
+const NAV_LINKS = [
+  { href: "/dashboard", label: "Dashboard" },
+  { href: "/portfolio", label: "Portfolio" },
+  { href: "/explore", label: "Explore" },
+  { href: "/settings", label: "Settings" },
+];
 
 export default function Header() {
   const [session, setSession] = useState<boolean | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const supabase = useMemo(() => createClient(), []);
+  const pathname = usePathname();
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -22,10 +31,11 @@ export default function Header() {
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [supabase]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
+    setMenuOpen(false);
   };
 
   return (
@@ -40,14 +50,20 @@ export default function Header() {
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-6 sm:flex">
-          {session && (
-            <Link
-              href="/dashboard"
-              className="text-sm font-medium text-navy/70 transition-colors hover:text-navy"
-            >
-              Dashboard
-            </Link>
-          )}
+          {session &&
+            NAV_LINKS.map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className={`text-sm font-medium transition-colors ${
+                  pathname === href
+                    ? "text-navy"
+                    : "text-navy/60 hover:text-navy"
+                }`}
+              >
+                {label}
+              </Link>
+            ))}
           {session ? (
             <button
               onClick={handleLogout}
@@ -84,21 +100,24 @@ export default function Header() {
       {menuOpen && (
         <div className="border-t border-grey px-4 pb-4 pt-2 sm:hidden">
           <nav className="flex flex-col gap-3">
-            {session && (
-              <Link
-                href="/dashboard"
-                onClick={() => setMenuOpen(false)}
-                className="text-sm font-medium text-navy/70 hover:text-navy"
-              >
-                Dashboard
-              </Link>
-            )}
+            {session &&
+              NAV_LINKS.map(({ href, label }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  onClick={() => setMenuOpen(false)}
+                  className={`text-sm font-medium ${
+                    pathname === href
+                      ? "text-navy"
+                      : "text-navy/70 hover:text-navy"
+                  }`}
+                >
+                  {label}
+                </Link>
+              ))}
             {session ? (
               <button
-                onClick={() => {
-                  handleLogout();
-                  setMenuOpen(false);
-                }}
+                onClick={handleLogout}
                 className="flex items-center gap-1.5 text-sm font-medium text-navy/70 hover:text-navy"
               >
                 <LogOut className="h-4 w-4" />

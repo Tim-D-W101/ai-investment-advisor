@@ -15,6 +15,12 @@ export default function Home() {
           </Link>
           <div className="flex items-center gap-4">
             <Link
+              href="/pricing"
+              className="hidden text-sm font-medium text-navy/70 transition-colors hover:text-navy sm:block"
+            >
+              Pricing
+            </Link>
+            <Link
               href="/login"
               className="text-sm font-medium text-navy/70 transition-colors hover:text-navy"
             >
@@ -40,21 +46,21 @@ export default function Home() {
               <span className="text-navy-light">for South Africans</span>
             </h1>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-navy/60 sm:text-xl">
-              Get an AI-powered portfolio in 2 minutes. No jargon. No advisor
-              fees.
+              Get AI-powered portfolio guidance in 2 minutes. No jargon. No
+              advisor fees. Educational insights tailored to your goals.
             </p>
             <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Link
                 href="/signup"
                 className="w-full rounded-lg bg-navy px-8 py-3.5 text-center text-base font-semibold text-white shadow-sm transition-all hover:bg-navy-light hover:shadow-md sm:w-auto"
               >
-                Start investing today
+                Start for free
               </Link>
               <Link
-                href="/login"
+                href="/pricing"
                 className="w-full rounded-lg border border-grey px-8 py-3.5 text-center text-base font-semibold text-navy transition-colors hover:bg-grey-soft sm:w-auto"
               >
-                Sign in
+                View pricing
               </Link>
             </div>
           </div>
@@ -70,18 +76,19 @@ export default function Home() {
                   2-minute setup
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-navy/60">
-                  Answer a few quick questions and get a personalised portfolio
-                  tailored to your goals.
+                  Answer a few quick questions and get personalised portfolio
+                  guidance tailored to your goals and risk profile.
                 </p>
               </div>
               <div className="rounded-xl border border-grey bg-white p-6 shadow-sm">
                 <BarChart3 className="h-8 w-8 text-navy" />
                 <h3 className="mt-4 text-lg font-semibold text-navy">
-                  AI-powered
+                  AI-powered insights
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-navy/60">
-                  Our algorithms analyse the market and optimise your
-                  investments automatically.
+                  Claude AI explains JSE stocks in plain language — so you
+                  understand what you own and why it might belong in your
+                  portfolio.
                 </p>
               </div>
               <div className="rounded-xl border border-grey bg-white p-6 shadow-sm">
@@ -90,8 +97,8 @@ export default function Home() {
                   No hidden fees
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-navy/60">
-                  Transparent pricing with zero advisor fees. What you see is
-                  what you get.
+                  Transparent pricing with a free tier that never expires. No
+                  advisor commissions, no hidden charges.
                 </p>
               </div>
             </div>
@@ -100,8 +107,45 @@ export default function Home() {
 
         {/* Footer */}
         <footer className="border-t border-grey px-4 py-6">
-          <div className="mx-auto max-w-7xl text-center text-xs text-navy/40">
-            &copy; {new Date().getFullYear()} InvestNow. All rights reserved.
+          <div className="mx-auto max-w-7xl">
+            <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
+              <p className="text-xs text-navy/40">
+                &copy; {new Date().getFullYear()} InvestNow. All rights
+                reserved.
+              </p>
+              <div className="flex gap-4 text-xs">
+                <Link
+                  href="/pricing"
+                  className="text-navy/40 transition-colors hover:text-navy/60"
+                >
+                  Pricing
+                </Link>
+                <Link
+                  href="/privacy"
+                  className="text-navy/40 transition-colors hover:text-navy/60"
+                >
+                  Privacy
+                </Link>
+                <Link
+                  href="/terms"
+                  className="text-navy/40 transition-colors hover:text-navy/60"
+                >
+                  Terms
+                </Link>
+                <Link
+                  href="/disclaimer"
+                  className="text-navy/40 transition-colors hover:text-navy/60"
+                >
+                  Disclaimer
+                </Link>
+              </div>
+            </div>
+            {/* FSP disclaimer — required by compliance */}
+            <p className="mt-3 text-center text-xs text-navy/30">
+              InvestNow provides educational information only — not regulated
+              financial advice. We are not an FSP-licensed entity under the FAIS
+              Act.
+            </p>
           </div>
         </footer>
       </main>
