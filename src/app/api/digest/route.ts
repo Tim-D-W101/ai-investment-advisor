@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
 
     const holdingsHtml =
       holdingsList.length === 0
-        ? "<p>No holdings tracked yet. <a href='https://investnow.vercel.app/portfolio'>Add your first holding →</a></p>"
+        ? `<p>No holdings tracked yet. <a href='${process.env.NEXT_PUBLIC_APP_URL}/portfolio'>Add your first holding →</a></p>`
         : `<table style="border-collapse:collapse;width:100%">
             <thead><tr>
               <th style="text-align:left;padding:8px;border-bottom:2px solid #e1e5eb">Ticker</th>
@@ -87,18 +87,18 @@ export async function POST(request: NextRequest) {
   <h2 style="margin-top:24px">Your holdings</h2>
   ${holdingsHtml}
   <p style="margin-top:24px">
-    <a href="https://investnow.vercel.app/dashboard" style="background:#1F4E79;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600">View dashboard →</a>
+    <a href="${process.env.NEXT_PUBLIC_APP_URL}/dashboard" style="background:#1F4E79;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600">View dashboard →</a>
   </p>
   <hr style="margin-top:40px;border:none;border-top:1px solid #e1e5eb" />
   <p style="font-size:11px;color:#9ca3af">
     InvestNow provides educational information only — not regulated financial advice under the FAIS Act.
-    <br />To unsubscribe, visit your <a href="https://investnow.vercel.app/settings">account settings</a>.
+    <br />To unsubscribe, visit your <a href="${process.env.NEXT_PUBLIC_APP_URL}/settings">account settings</a>.
   </p>
 </body>
 </html>`;
 
     const { error: sendError } = await resend.emails.send({
-      from: "InvestNow <digest@investnow.co.za>",
+      from: "InvestNow <onboarding@resend.dev>",
       to: user.email,
       subject: "Your weekly InvestNow portfolio digest",
       html,
